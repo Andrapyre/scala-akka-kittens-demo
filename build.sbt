@@ -1,5 +1,6 @@
 lazy val akkaHttpVersion = "10.2.9"
 lazy val akkaVersion    = "2.6.19"
+lazy val circeVersion = "0.14.2"
 
 // Run in a separate JVM, to make sure sbt waits until all threads have
 // finished before returning.
@@ -23,6 +24,11 @@ lazy val root = (project in file(".")).
 
       "com.typesafe.akka" %% "akka-http-testkit"        % akkaHttpVersion % Test,
       "com.typesafe.akka" %% "akka-actor-testkit-typed" % akkaVersion     % Test,
-      "org.scalatest"     %% "scalatest"                % "3.1.4"         % Test
+      "org.scalatest"     %% "scalatest"                % "3.1.4"         % Test,
+
+      "io.circe" %% "circe-core" % circeVersion,
+      "io.circe" %% "circe-parser" % circeVersion,
+      "io.circe" %% "circe-generic" % circeVersion
     )
   )
+
