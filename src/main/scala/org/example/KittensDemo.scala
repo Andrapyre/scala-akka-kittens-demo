@@ -1,5 +1,6 @@
 package org.example
 
+import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.model.StatusCodes
 import akka.http.scaladsl.server.Directives._
@@ -9,7 +10,7 @@ import org.example.controllers.KittenMatcherController
 import org.example.service.KittenJacketMatcherService
 import spray.json.{JsArray, JsNumber, JsObject, JsString}
 
-import scala.concurrent.ExecutionContext
+import scala.concurrent.{ExecutionContext, ExecutionContextExecutor}
 
 /**
  * An very basic HTTP stub service that is a part of the Kittens Demo.
@@ -25,8 +26,8 @@ import scala.concurrent.ExecutionContext
 object KittensDemo {
 
   def main(args: Array[String]): Unit = {
-    implicit val system = akka.actor.ActorSystem("KittensDemo")
-    implicit val ec = ExecutionContext.global
+    implicit val system: ActorSystem = akka.actor.ActorSystem("KittensDemo")
+    implicit val ec: ExecutionContextExecutor = ExecutionContext.global
     import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport._
 
     val kittensApiClient = new KittensClient(system.settings.config.getString("kittens-api-host"))

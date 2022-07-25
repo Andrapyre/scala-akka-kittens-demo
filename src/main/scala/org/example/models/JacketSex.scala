@@ -2,15 +2,15 @@ package org.example.models
 
 import io.circe.{Decoder, DecodingFailure, Encoder, Json}
 
-final case class JacketSex(sex: Sex)
+final case class JacketSex(value: Sex)
 
 object JacketSex {
   private val maleJsonValue = "m"
   private val femaleJsonValue = "f"
   private val unisexJsonValue = "f"
 
-  implicit val JacketSexEncoder: Encoder[JacketSex] = Encoder.apply(kittenSex => {
-    val result = kittenSex.sex match {
+  implicit val JacketSexEncoder: Encoder[JacketSex] = Encoder.apply(jacketSex => {
+    val result = jacketSex.value match {
       case Sex.Male => maleJsonValue
       case Sex.Female => femaleJsonValue
       case Sex.Unisex => unisexJsonValue
