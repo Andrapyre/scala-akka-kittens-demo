@@ -2,7 +2,7 @@ package org.example.service
 
 import org.example.models.{Color, Jacket, JacketColor, JacketSize, Kitten, KittenColor}
 
-class KittenJacketMatcher {
+class KittenJacketMatcherService {
   def getJacketsForKitten(kitten: Kitten, jackets: Vector[Jacket]): Vector[Jacket] = {
     val jacketsFilteredByColor = filterJacketsByKittenColor(kitten.color, jackets)
     val jacketsFilteredBySize = jacketsFilteredByColor.flatMap(jacket => filterJacketByKittenSize(jacket, kitten.height))
