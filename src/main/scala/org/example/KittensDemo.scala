@@ -6,6 +6,7 @@ import akka.http.scaladsl.model.StatusCodes
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
 import org.example.clients.{JacketsClient, KittensClient}
+import org.example.config.ApplicationConfig
 import org.example.controllers.KittenMatcherController
 import org.example.service.KittenJacketMatcherService
 import spray.json.{JsArray, JsNumber, JsObject, JsString}
@@ -30,8 +31,9 @@ object KittensDemo {
     implicit val ec: ExecutionContextExecutor = ExecutionContext.global
     import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport._
 
-    val kittensApiClient = new KittensClient(system.settings.config.getString("kittens-api-host"))
-    val jacketsApiClient = new JacketsClient(system.settings.config.getString("jackets-api-host"))
+    val config = ApplicationConfig()
+    val kittensApiClient = new KittensClient(config.externalServices.kittensApiHost)
+    val jacketsApiClient = new JacketsClient(config.externalServices.jacketsApiHost)
 
     val kittenJacketMatcherService = new KittenJacketMatcherService()
     val kittenMatcherController = new KittenMatcherController(kittensApiClient, jacketsApiClient, kittenJacketMatcherService)
@@ -40,7 +42,7 @@ object KittensDemo {
       get {
         concat(
           path("kitten_jackets" / Remaining) { path =>
-            kittenMatcherController.matchKittenToJackets(path)
+            kittenMatcherController.matchKittenToJackets(path, config.kittens.routes.defaultRequestTimeout)
           },
           path("kittens" / Remaining) {
             case "percy" => complete(
@@ -73,6 +75,6 @@ object KittensDemo {
           },
         )
       }
-    Http().newServerAt("0.0.0.0", system.settings.config.getInt("kittens.port")).bind(route)
+    Http().newServerAt("0.0.0.0", config.kittens.port).bind(route)
   }
 }
