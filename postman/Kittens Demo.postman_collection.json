@@ -1,0 +1,28 @@
+{
+	"info": {
+		"_postman_id": "a88b0036-4adb-4fb4-beb7-0ca7241dac5e",
+		"name": "Kittens Demo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Kitten",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/kitten_jackets/ben",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"kitten_jackets",
+						"ben"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

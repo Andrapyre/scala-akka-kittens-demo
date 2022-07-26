@@ -9,7 +9,9 @@ import akka.http.scaladsl.server.Directives.complete
 import com.typesafe.scalalogging.LazyLogging
 import io.circe.syntax.EncoderOps
 import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport._
+import org.example.models.ApplicationError.GenericInternalServerError
 
+import java.util.concurrent.TimeoutException
 import scala.concurrent.duration.DurationInt
 import scala.concurrent.{Await, ExecutionContext, Future}
 
@@ -26,9 +28,9 @@ class KittenMatcherController(kittenClient: KittensClient, jacketsClient: Jacket
       }
     } yield res
 
-    response.recover(err => handleFailure(new Exception(s"Execution failed for kitten id: $kittenId", err)))
+    response.recover(err => handleFailure(err))
 
-    Await.result(response, 3.seconds)
+    Await.result(response, 5.seconds)
   }
 
   private def handleFailure(err: Throwable): StandardRoute = {
