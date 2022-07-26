@@ -9,9 +9,6 @@ import akka.http.scaladsl.server.Directives.complete
 import com.typesafe.scalalogging.LazyLogging
 import io.circe.syntax.EncoderOps
 import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport._
-import org.example.models.ApplicationError.GenericInternalServerError
-
-import java.util.concurrent.TimeoutException
 import scala.concurrent.duration.DurationInt
 import scala.concurrent.{Await, ExecutionContext, Future}
 

@@ -1,6 +1,6 @@
 package org.example.service
 
-import org.example.models.{Color, Jacket, JacketColor, JacketSize, Kitten, KittenColor, Sex}
+import org.example.models.{Color, Jacket, JacketSize, Kitten, KittenColor, Sex}
 
 class KittenJacketMatcherService {
   def getJacketsForKitten(kitten: Kitten, jackets: Vector[Jacket]): Vector[Jacket] = {
