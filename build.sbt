@@ -6,6 +6,7 @@ lazy val scalaTestVersion = "3.1.4"
 lazy val scalaTestPlusMockitoVersion = "3.2.10.0"
 lazy val scalaLoggingVersion = "3.9.4"
 lazy val logbackVersion = "1.2.3"
+lazy val pureConfigVersion = "0.17.1"
 
 // Run in a separate JVM, to make sure sbt waits until all threads have
 // finished before returning.
@@ -25,7 +26,10 @@ lazy val root = (project in file(".")).
       "com.typesafe.akka" %% "akka-http-spray-json"     % akkaHttpVersion,
       "com.typesafe.akka" %% "akka-actor-typed"         % akkaVersion,
       "com.typesafe.akka" %% "akka-stream"              % akkaVersion,
+
       "ch.qos.logback"    % "logback-classic"           % logbackVersion,
+      "com.typesafe.scala-logging" %% "scala-logging"   % scalaLoggingVersion,
+      "com.github.pureconfig" %% "pureconfig"           % pureConfigVersion,
 
       "com.typesafe.akka" %% "akka-http-testkit"        % akkaHttpVersion             % Test,
       "com.typesafe.akka" %% "akka-actor-testkit-typed" % akkaVersion                 % Test,
@@ -35,9 +39,11 @@ lazy val root = (project in file(".")).
       "io.circe" %% "circe-core"                % circeVersion,
       "io.circe" %% "circe-parser"              % circeVersion,
       "io.circe" %% "circe-generic"             % circeVersion,
-      "de.heikoseeberger" %% "akka-http-circe"  % akkaHttpCirceVersion,
+      "de.heikoseeberger" %% "akka-http-circe"  % akkaHttpCirceVersion
 
-      "com.typesafe.scala-logging" %% "scala-logging"   % scalaLoggingVersion
+
+
+
     )
   )
 

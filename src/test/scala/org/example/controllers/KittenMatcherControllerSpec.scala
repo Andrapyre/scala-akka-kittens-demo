@@ -17,16 +17,17 @@ import org.scalatestplus.mockito.MockitoSugar
 import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport._
 import org.example.models.ApplicationError.ExternalApiError
 
+import scala.concurrent.duration.{Duration, DurationInt}
 import scala.concurrent.{ExecutionContext, ExecutionContextExecutor, Future}
 
 class KittenMatcherControllerSpec extends AnyFreeSpec with MockitoSugar with Matchers with ScalatestRouteTest {
   implicit val ec: ExecutionContextExecutor = ExecutionContext.global
 
-  private def generateTestRoute (controllerMethod: String => StandardRoute): Route = {
+  private def generateTestRoute (controllerMethod: (String, Duration) => StandardRoute): Route = {
     get {
       concat(
         path("kitten_jackets" / Remaining) { path =>
-          controllerMethod(path)
+          controllerMethod(path, 5.seconds)
         },
       )
     }
