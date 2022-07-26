@@ -6,6 +6,7 @@ import akka.http.scaladsl.model.{HttpMethods, HttpRequest, StatusCodes, Uri}
 import akka.http.scaladsl.unmarshalling.Unmarshal
 import org.example.models.Kitten
 import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport._
+import org.example.models.ApplicationError.ExternalApiError
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -18,7 +19,8 @@ class KittensClient(hostUrl: String)(implicit val actorSystem: ActorSystem, ec: 
       response <- Http().singleRequest(request)
       kittenOption <- response.status match {
         case StatusCodes.OK => Unmarshal(response.entity).to[Kitten].map(body => Some(body))
-        case _ => Future.successful(None)
+        case StatusCodes.NotFound => Future.successful(None)
+        case _ => Future.failed(ExternalApiError(new Exception(s"Could not retrieve data from kittens api. Status: ${response.status}")))
       }
     } yield kittenOption
   }
